@@ -2,7 +2,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const cors = require('cors');
-const path = require('path');  // <-- add this
 
 
 // Load environment variables
@@ -25,12 +24,13 @@ app.use(express.json()); // parse JSON bodies
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/samples', require('./routes/sampleRoutes'));
 
-// Serve frontend static files from 'frontend' folder
-app.use(express.static(path.join(__dirname, 'frontend')));
 
-// Serve index.html for root request
+// No static frontend serving here - frontend will be deployed separately
+
+
+// Default route for test or health check
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+  res.send('Backend API is running...');
 });
 
 
